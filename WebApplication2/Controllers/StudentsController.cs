@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -15,9 +16,22 @@ namespace WebApplication2.Controllers
         private CatalogDBContext db = new CatalogDBContext();
 
         // GET: Students
-        public ActionResult Index()
+        public ActionResult Index(string format = "")
         {
-            return View(db.Students.ToList());
+            if (format == "")
+            {
+                return View(db.Students.ToList());
+            }
+            else
+            {
+                var data = db.Students.ToList().Select(p => new
+                {
+                    p.FullName,
+                    p.TotalEnrollments
+                }).ToList();
+
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
         }
 
         // GET: Students/Details/5

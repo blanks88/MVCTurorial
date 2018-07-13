@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace WebApplication2.Models
 {
@@ -11,6 +9,17 @@ namespace WebApplication2.Models
         public string LastName { get; set; }
         public string FirstMidName { get; set; }
         public DateTime EnrollmentDate { get; set; }
+
+        public string FullName
+        {
+            get => $"{ LastName } { FirstMidName }";
+        }
+
+        public int TotalEnrollments
+        {
+            get => Enrollments.Count;
+        }
+
 
         public virtual ICollection<Enrollment> Enrollments { get; set; }
     }
